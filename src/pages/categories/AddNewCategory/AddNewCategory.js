@@ -15,7 +15,7 @@ const AddNewCategory = ({setShow,show,handleClose,categoryLIst}) => {
   const [categoryName,setCategoryName]=useState('');
   const [parentcategoryId,setParentcategoryId]=useState('');
 
-  const canSave = [categoryName, parentcategoryId].every(Boolean) && !isLoading;
+  const canSave = [categoryName].every(Boolean) && !isLoading;
 
   const onParentCategoryChange = e => setParentcategoryId(e.target.value)
   
@@ -97,6 +97,7 @@ const AddNewCategory = ({setShow,show,handleClose,categoryLIst}) => {
 
       
       <Form.Select className='form-control' onChange={onParentCategoryChange}>
+        <option>select category</option>
        {
           createCategoryList(categoryLIst).map(option =>
             <option value={option.value} key={option.value}>{option.name}</option>)

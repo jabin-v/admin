@@ -18,14 +18,14 @@ export const categoriesApiSlice=apiSlice.injectEndpoints({
             query:()=>"/category",
             transformResponse:responseData=>{
 
-                // console.log(categoriesAdapter)
-                // console.log(initialState);
-                // console.log(responseData);
+                console.log(categoriesAdapter)
+                console.log(initialState);
+                console.log(responseData);
                 return categoriesAdapter.setAll(initialState,responseData.data)
             },
             providesTags: (result, error, arg) => [
-                { type: 'Category', id: "LIST" },
-                ...result.ids.map(id => ({ type: 'Category', id }))
+                { type: 'Category', id: "LIST" }
+                
             ]
         }),
 
@@ -46,6 +46,32 @@ export const categoriesApiSlice=apiSlice.injectEndpoints({
 
         }),
 
+        updateCategory:builder.mutation({
+            
+            
+            query:updatesList=>({
+                url:"/category/update",
+                method:"PUT",
+                body:{updatesList}
+            }),
+            invalidatesTags: [
+                { type: 'Category', id: "LIST" }
+            ]
+        }),
+        deleteCategory: builder.mutation({
+            query: deleteList => ({
+                url: '/category/delete',
+                method: 'DELETE',
+                body: { deleteList }
+            }),
+            invalidatesTags: [
+                { type: 'Category', id: "LIST" }
+            ]
+        }),
+        
+        
+
+
         
 
 
@@ -54,7 +80,7 @@ export const categoriesApiSlice=apiSlice.injectEndpoints({
 
 
 
-export const {useGetCategoriesQuery,useAddNewCategoryMutation}=categoriesApiSlice;
+export const {useGetCategoriesQuery,useAddNewCategoryMutation,useUpdateCategoryMutation,useDeleteCategoryMutation}=categoriesApiSlice;
 
 export const selectCaegoriesResult = categoriesApiSlice.endpoints.getCategories.select();
 
