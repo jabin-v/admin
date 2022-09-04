@@ -10,6 +10,7 @@ import { uploadImages } from "../../../function/uploadImages";
 import dataURItoBlob from '../../../helpers/dataURIToBlob';
 import { useSelector } from 'react-redux';
 import { selectAllCategories, useGetCategoriesQuery } from '../../../features/categories/categoriesApiSlice';
+import Multiselect from 'multiselect-react-dropdown';
 
 
 
@@ -29,6 +30,48 @@ const AddNewProduct = ({setShow,show,handleClose}) => {
   const [images,setImages]=useState("");
   const [category,setCategory]=useState('')
   const [Error,setError]=useState('')
+  const [colors,setColors]=useState([]);
+  const [brand,setBrand]=useState("");
+  const [activity,setActivity]=useState("");
+  const [sizes,setSizes]=useState(null);
+  const [isFeatured,setIsFeatured]=useState(false);
+
+ 
+
+
+//=====================================================//
+
+const handleOnChangeColors=(e)=>{
+  setColors(e.target.value.split(','))
+  console.log(colors)
+
+}
+const onBrandChange=(e)=>{
+  setBrand(e.target.value)
+  
+
+}
+const onSizeChange=(e)=>{
+  setSizes(e.target.value.split(','));
+  
+
+}
+
+const onActivityChange=(e)=>{
+  setActivity(e.target.value.split(','));
+  
+
+}
+
+
+
+
+
+
+
+
+
+
 //---------------------------------------------------------------//
                         //    handle input image files
 const handleImages = (e) => {
@@ -69,7 +112,6 @@ const { data: categories}= useGetCategoriesQuery();
 
 const categoryLIst=useSelector(selectAllCategories);
 
-console.log(categoryLIst)
 
 
 const createCategoryList=(categories,options=[])=>{
@@ -102,6 +144,7 @@ const createCategoryList=(categories,options=[])=>{
 
     console.log("submitting");
     if(images && images.length) {
+      console.log("first")
      
         const postImages = images.map((img) => {
           return dataURItoBlob(img);
@@ -116,19 +159,18 @@ const createCategoryList=(categories,options=[])=>{
 
         console.log(response)
   
-        // const res = await createPost(
-        //   null,
-        //   null,
-        //   text,
-        //   response,s
-        //   user.id,
-        //   user.token
-        // );
     
         if (canSave) {
             try {
+              
                 await addNewProduct({ 
-                    name, description, price,quantity,images,offers,category,response
+                    name, description, 
+                    price,quantity,
+                    offers,category,
+                    brand,activity,
+                    response,colors,
+                    sizes,isFeatured
+
                     
 
                 }).unwrap()
@@ -138,7 +180,14 @@ const createCategoryList=(categories,options=[])=>{
                 setDescription("");
                 setName('');
                 setOffers('');
-                setPrice("")
+                setPrice("");
+                setQuantity("");
+                setActivity('');
+                setBrand('');
+                setSizes(null);
+                setColors([]);
+                setIsFeatured(false);
+
 
                 setShow(false);
 
@@ -211,28 +260,40 @@ const createCategoryList=(categories,options=[])=>{
      <Row>
       <Col>
       <Input
-       label="Name"
+      className="mt-2"
        value={name}
        placeholder={`product....`}
        onChange={(e)=>setName(e.target.value)}
        />
       <Input
-       label="Description"
+      className="mt-2"
        value={description}
        placeholder={`Description....`}
        onChange={(e)=>setDescription(e.target.value)}
        />
        <Input
-       label="Price"
+      className="mt-2"
        value={price}
        placeholder={`Enter Price`}
        onChange={(e)=>setPrice(e.target.value)}
        />
        <Input
-       label="offers"
+       className="mt-2"
        value={offers}
        placeholder={`Enter offers if any`}
        onChange={(e)=>setOffers(e.target.value)}
+       />
+       <Input
+       className="mt-2"
+       value={colors}
+       placeholder={`colors available`}
+       onChange={handleOnChangeColors}
+       />
+       <Input
+       className="mt-2"
+       value={activity}
+       placeholder={`Activity`}
+       onChange={onActivityChange}
        />
        
       
@@ -240,25 +301,26 @@ const createCategoryList=(categories,options=[])=>{
       </Col>
       <Col>
       <Input
-       label="Quantity"
+       className="mt-2"
        value={quantity}
        placeholder={`Enter stock`}
        onChange={(e)=>setQuantity(e.target.value)}
        
        />
      
-      <Form.Select className='mt-4' 
+      <Form.Select className='mt-2' 
         onChange={(e)=>setCategory(e.target.value)}
         value={category}
         
         >
+          <option>----select category----</option>
         {
            createCategoryList(categoryLIst).map(option =>
              <option value={option.value} key={option.value}>{option.name}</option>)
          }
        </Form.Select>
        <Form.Group controlId="formFile" className="mt-2">
-         <Form.Label>Select images</Form.Label>
+        
          <Form.Control
           type="file"
           accept="image/jpeg,image/png,image/webp,image/gif"
@@ -269,8 +331,39 @@ const createCategoryList=(categories,options=[])=>{
 
            />
        </Form.Group>
+       <Input
+       className="mt-2"
+       value={sizes}
+       placeholder={`Enter sizes available`}
+       onChange={onSizeChange}
+       />
+       
+  
+      <Input
+       className="mt-2"
+       value={brand}
+       placeholder={`Enter brands available`}
+       onChange={onBrandChange}
+       />
+       <Form.Select className='mt-2' 
+        onChange={(e)=>
+          setIsFeatured(e.target.value)
+        }
+        
+        value={isFeatured}
+        
+        >
+          
+             <option>featured product ?</option>
+             <option value="false" key="123">No</option>
+             <option value="true" key="126">Yes</option>
+           
+         
+       </Form.Select>
       
       </Col>
+
+     
       
        
       
@@ -301,7 +394,7 @@ const createCategoryList=(categories,options=[])=>{
       <Button
       disabled={!canSave}
        variant="primary" onClick={onSumbmitProduct} >
-        Save Changes
+        {isLoading ? "loading.." : "Save changes"}
       </Button>
     </Modal.Footer>
   </Modal>

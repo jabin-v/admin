@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect, useContext } from 'react';
-
+import "./style.css"
 import {useDispatch} from 'react-redux';
 import {setCredentials} from '../../features/auth/authSlice';
 import { useLoginMutation } from '../../features/auth/authApiSlice';
@@ -68,9 +68,10 @@ const Login = () => {
 
     return (
       
-                <section>
+                <div className='app'>
+                    <section className='wrapper'>
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                    <h1>Sign In</h1>
+                    <h6>SIGN IN</h6>
                     <form onSubmit={handleSubmit} >
                         <label htmlFor="username">Username:</label>
                         <input
@@ -101,6 +102,7 @@ const Login = () => {
                         </span>
                     </p>
                 </section>
+                </div>
             
     
     )

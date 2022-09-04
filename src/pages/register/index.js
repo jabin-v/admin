@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "../../features/auth/authApiSlice";
 import { setCredentials } from "../../features/auth/authSlice";
 
@@ -100,7 +100,7 @@ const Register = () => {
     }
 
     return (
-        <>
+        <div className="app">
             {success ? (
                 <section>
                     <h1>Success!</h1>
@@ -109,7 +109,7 @@ const Register = () => {
                     </p>
                 </section>
             ) : (
-                <section>
+                <section className="wrapper">
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
                     <h1>Register</h1>
                     <form  onSubmit={handleSubmit}>
@@ -190,12 +190,12 @@ const Register = () => {
                         Already registered?<br />
                         <span className="line">
                             {/*put router link here*/}
-                            <a href="#">Sign In</a>
+                            <Link to="/login">Sign In</Link>
                         </span>
                     </p>
                 </section>
             )}
-        </>
+        </div>
     )
 }
 

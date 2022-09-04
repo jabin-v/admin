@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Container, InputGroup, Row } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import { useSelector } from "react-redux";
-import DataTable from "../../components/dataTable/DataTable";
+
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 
@@ -34,6 +34,7 @@ import "./categories.scss";
 import AddNewCategory from "./AddNewCategory/AddNewCategory";
 import UpdateCategory from "./AddNewCategory/UpdateCategory";
 import DeleteCategory from "./AddNewCategory/DeleteCategory";
+import { Add } from "@mui/icons-material";
 
 const Categories = () => {
   //===============checkbox tree state=============================//
@@ -183,16 +184,18 @@ const Categories = () => {
       <div className="list">
         <Sidebar />
         <div className="listContainer">
-          <Navbar />
+          {/* <Navbar /> */}
           <Container>
             <Row>
               <Col md={12}>
                 <div className="list-header">
                   <h3>Categories</h3>
                 </div>
-                <button onClick={handleShow}>Add</button>
+                <div className="actionBtnContainer">
+                <button onClick={handleShow} > Add</button>
                 <button onClick={deleteCategory}>Delete</button>
                 <button onClick={updateCategory}>Edit</button>
+                </div>
               </Col>
             </Row>
             <Row>

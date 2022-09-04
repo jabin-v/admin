@@ -50,10 +50,12 @@ const Sidebar = () => {
               <span>Categories</span>
             </li>
           </Link>
+          <Link to="/orders">
           <li>
             <CreditCardIcon className="icon" />
             <span>Orders</span>
           </li>
+          </Link>
           <li>
             <LocalShippingIcon className="icon" />
             <span>Delivery</span>

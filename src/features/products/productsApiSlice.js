@@ -12,13 +12,17 @@ const productsAdapter = createEntityAdapter({
         getProducts:builder.query({
             query:()=>'/products',
             transformResponse:responseData=>{
-                console.log(responseData)
+            
                 return productsAdapter.setAll(initialState,responseData.data)
             },
-            providesTags: (result, error, arg) => [
-                { type: 'Product', id: "LIST" },
-                ...result.ids.map(id => ({ type: 'Product', id }))
-            ]
+            providesTags: (result, error, arg) => {
+                if (result?.ids) {
+                    return [
+                        { type: 'Product', id: 'LIST' },
+                        ...result.ids.map(id => ({ type: 'Product', id }))
+                    ]
+                } else return [{ type: 'Product', id: 'LIST' }]
+            }
         }),
         addNewProduct:builder.mutation({
             query:(newProduct)=>(
@@ -37,6 +41,32 @@ const productsAdapter = createEntityAdapter({
             ]
 
         }),
+        updateProduct:builder.mutation({
+
+            query:initialProduct=>({
+                url:'/products',
+                method:"PUT",
+                body:{
+                    ...initialProduct
+                }
+                
+            }),
+            invalidatesTags: (result, error, arg) => [
+                { type: 'Product', id: arg.id }
+            ]
+        }),
+        deleteProduct:builder.mutation({
+            query:({id})=>({
+                url:"/products",
+                method:"DELETE",
+                body:{id}
+            }),
+            invalidatesTags: (result, error, arg) => [
+                { type: 'Product', id: arg.id }
+            ]
+
+        })
+
         
 
         
@@ -44,7 +74,7 @@ const productsAdapter = createEntityAdapter({
     })
  })
 
- export const {useGetProductsQuery,useAddNewProductMutation}=productsApiSlice;
+ export const {useGetProductsQuery,useAddNewProductMutation,useUpdateProductMutation,useDeleteProductMutation}=productsApiSlice;
  export const selectProductsResult = productsApiSlice.endpoints.getProducts.select();
 
 // console.log(selectCaegoriesResult)

@@ -13,7 +13,7 @@ const Home = () => {
     <div className="home">
       <Sidebar/>
       <div className='homeContainer'>
-      <Navbar/>
+      {/* <Navbar/> */}
       <div className='widjets'>
         <Widjet type="user"/>
         <Widjet type="order"/>
@@ -39,5 +39,8 @@ const Home = () => {
       </div>
   )
 }
+
+
+
 
 export default Home
