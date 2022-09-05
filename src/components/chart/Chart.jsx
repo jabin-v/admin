@@ -1,4 +1,9 @@
 import "./chart.scss";
+import { selectCurrentToken } from '../../features/auth/authSlice'
+import useAxios from '../../hooks/useAxios'
+import axios from "../../apis/statsChart";
+import useAxiosFunction from "../../hooks/useAxiosFunction";
+import { useEffect, useMemo, useState } from "react";
 import {
   AreaChart,
   Area,
@@ -7,17 +12,111 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { useSelector } from "react-redux";
 
-const data = [
-  { name: "January", Total: 1200 },
-  { name: "February", Total: 2100 },
-  { name: "March", Total: 800 },
-  { name: "April", Total: 1600 },
-  { name: "May", Total: 900 },
-  { name: "June", Total: 1700 },
-];
+const BASE_URL = 'http://localhost:3500/api';
 
-const Chart = ({ aspect, title }) => {
+
+const Chart = ({ aspect, title}) => {
+ 
+  const [userStats, setUserStats] = useState([]);
+  const token = useSelector(selectCurrentToken);
+
+  
+  const MONTHS = useMemo(
+    () => [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ],
+    []
+  );
+
+  
+  // useEffect(() => {
+
+  //   const controller=new AbortController();
+  //   const signal=controller.signal;
+    
+  //   const getStats = async () => {
+  //     try {
+  //       const res = await axios.get(`${BASE_URL}/order/getmonthwise`,
+  //       {
+  //         headers: {
+  //           'Authorization': "Bearer "+token
+  //         }
+  //       },
+  //       {
+  //         signal
+  //       });
+  //       res.data.map((item) =>
+  //         setUserStats((prev) => [
+  //           ...prev,
+  //           { name: MONTHS[item._id - 1], "Total": item.total },
+  //         ])
+  //       );
+  //     } catch (err)
+  //     {
+  //       if(err.name === "AbortError"){
+  //         console.log("cancelled")
+  //       }else{
+  //         console.log("error")
+  //       }
+
+  //     }
+  //   };
+  //   getStats();
+
+  //   return ()=>{
+  //     controller.abort();
+  //   }
+  // }, [MONTHS]);
+
+  const [value, error, loading] = useAxios({
+    axiosInstance: axios,
+    method: "GET",
+    url: "/order/getmonthwise",
+    requestConfig: {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    },
+  });
+
+  let list=[];
+
+
+  for(let item of value){
+
+    list.push({
+      name: MONTHS[item._id - 1],
+       "Total": item.total
+
+
+    })
+  }
+
+  console.log(list)
+  
+
+
+
+
+
+
+
+
+ 
+
   return (
     <div className="chart">
       <div className="title">{title}</div>
@@ -25,7 +124,7 @@ const Chart = ({ aspect, title }) => {
         <AreaChart
           width={730}
           height={250}
-          data={data}
+          data={list}
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
         >
           <defs>

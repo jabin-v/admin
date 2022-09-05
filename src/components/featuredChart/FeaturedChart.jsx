@@ -1,54 +1,158 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpOutlinedIcon from "@mui/icons-material/KeyboardArrowUpOutlined";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer
+} from "recharts";
+import { selectCurrentToken } from '../../features/auth/authSlice'
+import useAxios from '../../hooks/useAxios'
+import axios from "../../apis/statsChart";
+
+import "./featuredChart.scss";
+import { useSelector } from 'react-redux';
+
+const data = [
+  {
+    name: "Page A",
+    uv: 4000,
+   
+  },
+  {
+    name: "Page B",
+    uv: 3000,
+   
+  },
+  {
+    name: "Page C",
+    uv: 2000,
+  
+  },
+  {
+    name: "Page D",
+    uv: 2780,
+    
+  },
+  {
+    name: "Page E",
+    uv: 1890,
+   
+  },
+  {
+    name: "Page F",
+    uv: 2390,
+   
+  },
+  {
+    name: "Page F",
+    uv: 2390,
+   
+  },
+  {
+    name: "Page F",
+    uv: 2390,
+   
+  },
+  {
+    name: "Page G",
+    uv: 3490,
+   
+  }
+];
 
 
-import "./featuredChart.scss"
-import { CircularProgressbar } from 'react-circular-progressbar';
-import "react-circular-progressbar/dist/styles.css";
+
 
 const FeaturedChart = () => {
+  const MONTHS = useMemo(
+    () => [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ],
+    []
+  );
+  const token = useSelector(selectCurrentToken);
+  const [value, error, loading] = useAxios({
+    axiosInstance: axios,
+    method: "GET",
+    url: "/users/stats",
+    requestConfig: {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    },
+  });
+
+  let list=[];
+
+
+  for(let item of value){
+
+    list.push({
+      name: MONTHS[item._id - 1],
+       "users": item.total
+
+
+    })
+  }
+
+  console.log(list)
+
+
+
+
+
+
+
   return (
     <div className='featured'>
-     <div className="top">
-        <h1 className='title'> Total Revenue</h1>
-        <MoreVertIcon fontSize='small'/>
-
-     </div>
+     
      <div className="bottom">
-        <div className="featuredChart">
-            <CircularProgressbar value={70} text={"70%"} strokeWidth={5}/>
-        </div>
-        <p className='title'> Total sales today</p>
-        <p className='amount'> 420</p>
-        <p className='desc'> 
-        Previous transactions processing. Last payments may not be included.
-        </p>
-        <div className='summary' >
-            <div className='item'>
-                <div className="itemTitle">Target</div>
-                <div className="itemResult">
-                <KeyboardArrowDownIcon fontSize="small"/>
-                <div className="resultAmount">$12.4k</div>
-                </div>
-            </div>
-            <div className="item">
-            <div className="itemTitle">Last Week</div>
-            <div className="itemResult positive">
-              <KeyboardArrowUpOutlinedIcon fontSize="small"/>
-              <div className="resultAmount">$12.4k</div>
-            </div>
-          </div>
-          <div className="item">
-            <div className="itemTitle">Last Month</div>
-            <div className="itemResult positive">
-              <KeyboardArrowUpOutlinedIcon fontSize="small"/>
-              <div className="resultAmount">$12.4k</div>
-            </div>
-          </div>
+     <div className="title">Users</div>
+    
+      
+     <BarChart
+      width={500}
+      height={250}
+      data={list}
+      margin={{
+        top: 5,
+        right: 30,
+        left: 5,
+        bottom: 5
+      }}
+    >
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="name" />
+      <YAxis />
+      <Tooltip />
+      <Legend />
+      <Bar dataKey="users" fill="#8884d8" />
+      <Bar dataKey="uv" fill="#82ca9d" />
+    </BarChart>
 
-        </div>
+   
+           
+         
+
+        
 
 
 

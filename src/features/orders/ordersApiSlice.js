@@ -26,24 +26,10 @@ const ordersAdapter = createEntityAdapter(
                 ...result.ids.map(id => ({ type: 'Order', id }))
             ]
         }),
-        // addNewProduct:builder.mutation({
-        //     query:(newProduct)=>(
-        //         {
-        //             url:'/products',
-        //             method:'POST',
-        //             body:{
-        //                 ...newProduct
-        //             }
-                    
-    
-        //         }
-        //     ),
-        //     invalidatesTags: [
-        //         { type: 'Product', id: "LIST" }
-        //     ]
 
-        // }),
         updateOrder:builder.mutation({
+
+            
 
 
             query:data=>({

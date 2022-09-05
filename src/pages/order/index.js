@@ -16,6 +16,7 @@ const Order = () => {
 
   
         const {
+            data,
             isLoading,
             isSuccess,
             isError,
@@ -25,7 +26,7 @@ const Order = () => {
           refetchOnFocus: true,
           refetchOnMountOrArgChange: true,
         });
-
+console.log(data)
         const orders = useSelector(selectAllOrders);
 
 
@@ -73,7 +74,7 @@ const Order = () => {
             progress={order.orderItems.deliveryStatus}
             orderId={order.orderItems._id}
             user={order.user}
-            productId={order.orderItems.product }
+            productId={order.orderItems.product}
             quantity={order.orderItems.quantity}
             />
 

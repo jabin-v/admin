@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Container, InputGroup, Row } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import { useSelector } from "react-redux";
+import EditIcon from '@mui/icons-material/Edit';
 
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
@@ -58,7 +59,7 @@ const Products = () => {
             <th>Category</th>
             <th>Price</th>
             <th>Quantity</th>
-            <th>Remove</th>
+            <th>Details</th>
           </tr>
         </thead>
         <tbody>
@@ -67,18 +68,20 @@ const Products = () => {
                 <tr key={product._id}>
                   <td>1</td>
                   <td>
-                    <Link
-                      to={product._id}
-                      style={{ color: "inherit", textDecoration: "inherit" }}
-                    >
+                    
                       {product.name}
-                    </Link>
+                  
                   </td>
                   <td>{product.category.name}</td>
                   <td>{product.price}</td>
                   <td>{product.quantity}</td>
                   <td>
-                    <DeleteIcon  />
+                  <Link
+                      to={product._id}
+                      style={{ color: "inherit", textDecoration: "inherit" }}
+                    >
+                    <EditIcon/>
+                    </Link>
                   </td>
                 </tr>
               ))

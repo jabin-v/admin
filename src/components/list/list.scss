@@ -17,15 +17,21 @@ align-items: center;
     padding:5px ;
     border-radius:5px ;
 
-    &.Approved{
+    &.shipped{
         color: green;
         background-color: rgba(0,128,0,0.151);
     }
-    &.Pending{
+    &.Processing{
         color:goldenrod;
         background-color: rgba(189,189,3,0.103);
 
     }
+    &.packed{
+        color:rgb(0, 162, 220)!important;
+        background-color: hsla(38, 91%, 48%, 0.745);
+
+    }
+   
 
 }
 

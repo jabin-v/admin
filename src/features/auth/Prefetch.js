@@ -4,9 +4,9 @@ import { ordersApiSlice } from "../orders/ordersApiSlice";
 import { categoriesApiSlice } from "../categories/categoriesApiSlice";
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
+import { userApiSlice } from "../users/userApiSlice";
 
 
-import React from 'react'
 
 const Prefetch = () => {
 useEffect(()=>{
@@ -16,6 +16,7 @@ useEffect(()=>{
     const products=store.dispatch(productsApiSlice.endpoints.getProducts.initiate());
     const orders=store.dispatch(ordersApiSlice.endpoints.getOrders.initiate())
     const categories=store.dispatch(categoriesApiSlice.endpoints.getCategories.initiate())
+    const users=store.dispatch(userApiSlice.endpoints.getUsers.initiate())
 
 
     return()=>{
@@ -24,6 +25,7 @@ useEffect(()=>{
         products.unsubscribe();
         orders.unsubscribe();
         categories.unsubscribe();
+        users.unsubscribe();
     }
 
 },[])

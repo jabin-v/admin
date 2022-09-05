@@ -4,13 +4,21 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
+import useAxios from "../../hooks/useAxios";
 
-const Widjet = ({ type }) => {
-  let data;
+import { useSelector } from "react-redux";
+import { selectCurrentToken } from "../../features/auth/authSlice";
+import { Link } from "react-router-dom";
+import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
 
+const Widjet = ({ type,count,diff }) => {
+
+
+
+let data;
   //temporary
   const amount = 100;
-  const diff = 20;
+  // const diff = 20;
 
   switch (type) {
     case "user":
@@ -18,6 +26,7 @@ const Widjet = ({ type }) => {
         title: "USERS",
         isMoney: false,
         link: "See all users",
+        to:"/users",
         icon: (
           <PersonOutlinedIcon
             className="icon"
@@ -31,9 +40,11 @@ const Widjet = ({ type }) => {
       break;
     case "order":
       data = {
-        title: "ORDERS",
-        isMoney: false,
+        title: "ORDERS PENDING",
+        isMoney: false,  
+       
         link: "View all orders",
+        to:"/orders",
         icon: (
           <ShoppingCartOutlinedIcon
             className="icon"
@@ -47,9 +58,10 @@ const Widjet = ({ type }) => {
       break;
     case "earning":
       data = {
-        title: "EARNINGS",
+        title: "EARNINGS THIS MONTH",
         isMoney: true,
         link: "View net earnings",
+        to:"/orders",
         icon: (
           <MonetizationOnOutlinedIcon
             className="icon"
@@ -60,9 +72,10 @@ const Widjet = ({ type }) => {
       break;
     case "balance":
       data = {
-        title: "BALANCE",
+        title: "TOTAL PRODUCTS",
         isMoney: true,
         link: "See details",
+        to:"/orders",
         icon: (
           <AccountBalanceWalletOutlinedIcon
             className="icon"
@@ -83,13 +96,18 @@ const Widjet = ({ type }) => {
       <div className="left">
         <span className="title">{data.title}</span>
         <span className="counter">
-          {data.isMoney && "$"} {amount}
+          {data.isMoney && "$"} {count}
         </span>
-        <span className="link">{data.link}</span>
+        <Link  className="linkto" to={data.to}><span className="link">{data.link}</span></Link>
       </div>
       <div className="right">
         <div className="percentage positive">
-          <KeyboardArrowUpIcon />
+
+          {
+            diff >  0 ? <KeyboardArrowUpIcon /> :  <KeyboardArrowDown />
+          }
+          
+         
           {diff} %
         </div>
         {data.icon}
