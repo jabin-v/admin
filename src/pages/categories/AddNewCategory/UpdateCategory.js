@@ -57,8 +57,7 @@ const UpdateCategory = ({
 
   //=============================================================//
 
-  console.log("checked",checkedArray);
-  console.log("expanded",expandedArray)
+ 
 
 
 
@@ -66,7 +65,7 @@ const UpdateCategory = ({
 
     const updatesList=[...checkedArray,...expandedArray];
 
-    console.log(updatesList);
+   
 
     try {
       await updateCategory(updatesList).unwrap();

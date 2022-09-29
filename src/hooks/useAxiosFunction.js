@@ -20,7 +20,7 @@ const axiosFetch=async(configObj)=>{
           signal: ctrl.signal,
         });
 
-        console.log(res);
+      
         setResponse(res.data);
       } catch (error) {
         console.log(error.message);

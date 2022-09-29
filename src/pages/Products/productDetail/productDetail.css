@@ -33,6 +33,8 @@
 
 
 
+
+
 .img-display{
     /* overflow: hidden; */
 }
@@ -40,10 +42,32 @@
 
 .img-item{
     margin: 0.3rem;
+    position:relative;
+}
+
+.deleteImage{
+    position:absolute;
+    top:50%;
+    left:50%;
+    cursor:pointer;
+   
+}
+
+.img-item .deleteImage{
+    display:none;
+    background:white;
+    border-radius:5px;
+    
+    
+
 }
 
 .img-item:hover{
     opacity: 0.8;
+}
+.img-item:hover .deleteImage{
+    display:block;
+    
 }
 .product-content{
     padding: 4rem 1rem;

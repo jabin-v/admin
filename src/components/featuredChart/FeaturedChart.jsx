@@ -113,7 +113,7 @@ const FeaturedChart = () => {
     })
   }
 
-  console.log(list)
+
 
 
 
@@ -145,7 +145,6 @@ const FeaturedChart = () => {
       <Tooltip />
       <Legend />
       <Bar dataKey="users" fill="#8884d8" />
-      <Bar dataKey="uv" fill="#82ca9d" />
     </BarChart>
 
    

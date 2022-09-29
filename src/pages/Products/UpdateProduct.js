@@ -29,15 +29,7 @@ const UpdateProduct = ({ setShow, show, handleClose, product }) => {
 
 
 
-  //===========state management============================//
-
-  const availabelcolors = product.colors ? product.colors.join(",") : "";
-  const activities = product.activity ? product.activity.join(",") : "";
-  const availableSizes = product.availableSizes
-    ? product.availableSizes.join(",")
-    : "";
-
-  console.log(product.category.name);
+ 
 
   const [name, setName] = useState(product.name);
   const [description, setDescription] = useState(product.description);
@@ -47,10 +39,10 @@ const UpdateProduct = ({ setShow, show, handleClose, product }) => {
   const [images, setImages] = useState([]);
   const [category, setCategory] = useState(product.category._id);
   const [Error, setError] = useState("");
-  const [colors, setColors] = useState(availabelcolors);
+  const [colors, setColors] = useState(product.colors);
   const [brand, setBrand] = useState(product.brand);
-  const [activity, setActivity] = useState(activities);
-  const [sizes, setSizes] = useState(availableSizes);
+  const [activity, setActivity] = useState(product.activity);
+  const [sizes, setSizes] = useState(product.availableSizes);
   const [isFeatured, setIsFeatured] = useState(product.isFeatured);
 //====================================state mgt ends here=======================//
 
@@ -58,7 +50,7 @@ const UpdateProduct = ({ setShow, show, handleClose, product }) => {
 
   const handleOnChangeColors = (e) => {
     setColors(e.target.value.split(","));
-    console.log(colors);
+   
   };
   const onBrandChange = (e) => {
     setBrand(e.target.value);
@@ -75,11 +67,11 @@ const UpdateProduct = ({ setShow, show, handleClose, product }) => {
 
 //===========================handling img files======================//
   const handleImages = (e) => {
-    console.log(images);
+   
     let files = Array.from(e.target.files);
-    console.log(files);
+
     files.forEach((img) => {
-      console.log(img);
+    
       if (
         img.type !== "image/jpeg" &&
         img.type !== "image/png" &&
@@ -96,7 +88,7 @@ const UpdateProduct = ({ setShow, show, handleClose, product }) => {
         files = files.filter((item) => item.name !== img.name);
         return;
       } else {
-        console.log("reader");
+      
         const reader = new FileReader();
         reader.readAsDataURL(img);
         reader.onload = (readerEvent) => {
@@ -131,9 +123,9 @@ const UpdateProduct = ({ setShow, show, handleClose, product }) => {
   const canSave =
     [name, description, price, quantity, images].every(Boolean) && !isLoading;
   const onSumbmitProduct = async () => {
-    console.log("submitting");
-    if (images && images.length) {
-      console.log("first");
+   
+    if (images && images.length >0) {
+ 
 
       const postImages = images.map((img) => {
         return dataURItoBlob(img);
@@ -146,10 +138,10 @@ const UpdateProduct = ({ setShow, show, handleClose, product }) => {
       });
       const response = await uploadImages(formData, path, token);
 
-      console.log(response);
+  
 
       if (canSave) {
-        console.log("updating node");
+       
         try {
           await updateProduct({
             id: product._id,

@@ -63,8 +63,7 @@ const Register = () => {
         
         try {
             const {data}=await register({username:user,password:pwd}).unwrap();
-            console.log(user)
-            
+          
             // dispatch(setCredentials({...userData,user}))
             setUser('');
             setPwd('');
@@ -87,7 +86,7 @@ const Register = () => {
             setMatchPwd('');
             navigate('/')
         } catch (err) {
-           console.log(err)
+           
             if (!err?.originalStatus) {
                 setErrMsg('No Server Response');
             } else if (err.originalStatus === 409) {

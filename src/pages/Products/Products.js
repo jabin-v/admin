@@ -64,15 +64,15 @@ const Products = () => {
         </thead>
         <tbody>
           {productsArray.length
-            ? productsArray.map((product) => (
+            ? productsArray.map((product,i) => (
                 <tr key={product._id}>
-                  <td>1</td>
+                  <td>{i+1}</td>
                   <td>
                     
                       {product.name}
                   
                   </td>
-                  <td>{product.category.name}</td>
+                  <td>{product?.category?.name}</td>
                   <td>{product.price}</td>
                   <td>{product.quantity}</td>
                   <td>

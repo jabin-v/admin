@@ -19,7 +19,7 @@ const useAxios = (configObj) => {
           signal: controller.signal,
         });
 
-        console.log(res);
+    
         setResponse(res.data);
       } catch (error) {
         console.log(error.message);

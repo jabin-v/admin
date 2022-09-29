@@ -8,11 +8,11 @@ const ShippingInfoCard = () => {
     const image1="https://m.media-amazon.com/images/I/81i057rz8gS._UL1500_.jpg"
     const { orderId } = useParams()
 
-    console.log(orderId)
+
 
     const order = useSelector((state) => selectOrderByid(state, orderId))
 
-    console.log(order)
+   
   return (
     <div className='info-wrapper'>
         <div className='info-section'>

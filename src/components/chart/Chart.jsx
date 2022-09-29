@@ -1,6 +1,6 @@
 import "./chart.scss";
-import { selectCurrentToken } from '../../features/auth/authSlice'
-import useAxios from '../../hooks/useAxios'
+import { selectCurrentToken } from "../../features/auth/authSlice";
+import useAxios from "../../hooks/useAxios";
 import axios from "../../apis/statsChart";
 import useAxiosFunction from "../../hooks/useAxiosFunction";
 import { useEffect, useMemo, useState } from "react";
@@ -14,15 +14,12 @@ import {
 } from "recharts";
 import { useSelector } from "react-redux";
 
-const BASE_URL = 'http://localhost:3500/api';
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-
-const Chart = ({ aspect, title}) => {
- 
+const Chart = ({ aspect, title }) => {
   const [userStats, setUserStats] = useState([]);
   const token = useSelector(selectCurrentToken);
 
-  
   const MONTHS = useMemo(
     () => [
       "Jan",
@@ -41,46 +38,6 @@ const Chart = ({ aspect, title}) => {
     []
   );
 
-  
-  // useEffect(() => {
-
-  //   const controller=new AbortController();
-  //   const signal=controller.signal;
-    
-  //   const getStats = async () => {
-  //     try {
-  //       const res = await axios.get(`${BASE_URL}/order/getmonthwise`,
-  //       {
-  //         headers: {
-  //           'Authorization': "Bearer "+token
-  //         }
-  //       },
-  //       {
-  //         signal
-  //       });
-  //       res.data.map((item) =>
-  //         setUserStats((prev) => [
-  //           ...prev,
-  //           { name: MONTHS[item._id - 1], "Total": item.total },
-  //         ])
-  //       );
-  //     } catch (err)
-  //     {
-  //       if(err.name === "AbortError"){
-  //         console.log("cancelled")
-  //       }else{
-  //         console.log("error")
-  //       }
-
-  //     }
-  //   };
-  //   getStats();
-
-  //   return ()=>{
-  //     controller.abort();
-  //   }
-  // }, [MONTHS]);
-
   const [value, error, loading] = useAxios({
     axiosInstance: axios,
     method: "GET",
@@ -92,30 +49,14 @@ const Chart = ({ aspect, title}) => {
     },
   });
 
-  let list=[];
+  let list = [];
 
-
-  for(let item of value){
-
+  for (let item of value) {
     list.push({
       name: MONTHS[item._id - 1],
-       "Total": item.total
-
-
-    })
+      Total: item.total,
+    });
   }
-
-  console.log(list)
-  
-
-
-
-
-
-
-
-
- 
 
   return (
     <div className="chart">

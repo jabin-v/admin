@@ -13,8 +13,12 @@ import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSyst
 import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Link } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { borderRadius } from '@mui/system';
 
 const Sidebar = () => {
+  const newMessage=useSelector(state=>state.chats.messageRecieved)
+
   return (
     <div className='sidebar'>
         <div className='top'>
@@ -56,10 +60,18 @@ const Sidebar = () => {
             <span>Orders</span>
           </li>
           </Link>
+          <Link to="/chats">
           <li>
             <LocalShippingIcon className="icon" />
-            <span>Delivery</span>
+            <span>Chat</span>
+            {
+              newMessage && <span className='indicator'></span>
+            }
+            
           </li>
+          
+
+          </Link>
           <p className="title">USEFUL</p>
           <li>
             <InsertChartIcon className="icon" />

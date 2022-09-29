@@ -18,9 +18,7 @@ export const categoriesApiSlice=apiSlice.injectEndpoints({
             query:()=>"/category",
             transformResponse:responseData=>{
 
-                console.log(categoriesAdapter)
-                console.log(initialState);
-                console.log(responseData);
+               
                 return categoriesAdapter.setAll(initialState,responseData.data)
             },
             providesTags: (result, error, arg) => [

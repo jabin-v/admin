@@ -3,8 +3,11 @@ import {buildCreateApi} from '@reduxjs/toolkit/dist/query';
 
 import {apiSlice} from '../../app/api/apiSlice' ;
 
-const usersAdapter = createEntityAdapter({})
-
+const usersAdapter = createEntityAdapter({
+    selectId: (e) => e._id
+  }
+    
+);
 
 const initialState=usersAdapter.getInitialState();
 
@@ -12,12 +15,10 @@ export const userApiSlice=apiSlice.injectEndpoints({
     endpoints:builder=>({
         getUsers:builder.query({
             query:()=>'/users',
-            validateStatus: (response, result) => {
-                return response.status === 200 && !result.isError
-            },
+            
             transformResponse:responseData=>{
 
-                console.log(responseData)
+             
             
                 return usersAdapter.setAll(initialState,responseData)
             },

@@ -55,6 +55,20 @@ const productsAdapter = createEntityAdapter({
                 { type: 'Product', id: arg.id }
             ]
         }),
+        removeImage:builder.mutation({
+
+            query:initialProduct=>({
+                url:'/products/removeimage',
+                method:"PATCH",
+                body:{
+                    ...initialProduct
+                }
+                
+            }),
+            invalidatesTags: (result, error, arg) => [
+                { type: 'Product', id: arg.id }
+            ]
+        }),
         deleteProduct:builder.mutation({
             query:({id})=>({
                 url:"/products",
@@ -74,7 +88,7 @@ const productsAdapter = createEntityAdapter({
     })
  })
 
- export const {useGetProductsQuery,useAddNewProductMutation,useUpdateProductMutation,useDeleteProductMutation}=productsApiSlice;
+ export const {useGetProductsQuery,useAddNewProductMutation,useUpdateProductMutation,useDeleteProductMutation,useRemoveImageMutation}=productsApiSlice;
  export const selectProductsResult = productsApiSlice.endpoints.getProducts.select();
 
 // console.log(selectCaegoriesResult)

@@ -3,7 +3,7 @@ import axios from "axios";
 export const uploadImages = async (formData, path, token) => {
   try {
     const { data } = await axios.post(
-      `http://localhost:3500/api/upload`,
+      `${process.env.REACT_APP_BASE_URL}/upload`,
       formData,
       {
         headers: {

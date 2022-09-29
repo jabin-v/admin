@@ -17,7 +17,7 @@ const ordersAdapter = createEntityAdapter(
             // keepUnusedDataFor:5,
             transformResponse:responseData=>{
 
-                console.log(responseData)
+            
             
                 return ordersAdapter.setAll(initialState,responseData)
             },
@@ -72,7 +72,6 @@ const ordersAdapter = createEntityAdapter(
  export const {useGetOrdersQuery,useUpdateOrderMutation,useDeleteOrderMutation}=ordersApiSlice;
  export const selectOrderResult = ordersApiSlice.endpoints.getOrders.select();
 
-console.log(selectOrderResult)
 
 const selectOrdersData = createSelector(
     selectOrderResult,

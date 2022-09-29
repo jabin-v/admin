@@ -20,8 +20,79 @@ import Order from "./pages/order";
 import ShippingInfo from "./components/modal";
 import Prefetch from "./features/auth/Prefetch";
 import Users from "./pages/users/Users";
+import Chat from "./pages/chat/Chat";
+import { useDispatch, useSelector } from "react-redux";
+import { removeChatRoom, setChatRooms, setMessgeRecieved, setSocket } from "./features/chat/chatSlice";
+import socketIOClient from "socket.io-client";
+import { useEffect, useState } from "react";
+import { selectCurrentRoles, selectCurrentToken } from "./features/auth/authSlice";
 
 function App() {
+
+  const token=useSelector(selectCurrentToken);
+  const roles=useSelector(selectCurrentRoles);
+  const authAsAdmin= roles?.includes(5150);
+
+  const [socket,setSocket]=useState()
+
+
+
+
+ const dispatch=useDispatch();
+
+
+ 
+
+ 
+
+  useEffect(()=>{
+
+  
+
+    if(token && authAsAdmin){
+
+      const socket=socketIOClient("http://localhost:3500");
+
+
+
+      setSocket(socket)
+
+      socket.emit("admin connected with the server","Admin"+Math.floor(Math.random()*1000000000))
+
+      socket.on("server sends message from client to admin",({message,user})=>{
+      dispatch(setMessgeRecieved())
+      dispatch(setChatRooms({user,message})).unwrap();
+      
+      
+
+
+      })
+
+      socket.on("disconnected",({reason,socketId})=>{
+       
+
+        dispatch(removeChatRoom({socketId}))
+      })
+    
+
+
+
+
+    //socket will disconnet when closing the page
+   
+    return ()=>socket.disconnect()
+    
+
+    }
+
+   
+    
+
+
+  },[token,authAsAdmin])
+
+
+
   return (
     <Routes>
       {/* ========= login page ============ */}
@@ -56,7 +127,7 @@ function App() {
             <Route index  element={<Users/>}/>
           </Route>
 
-          <Route path="/private" element={<Private />} />
+          <Route path="/chats" element={<Chat socket={socket}/>} />
         </Route>
         </Route>
       </Route>

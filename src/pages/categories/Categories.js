@@ -78,7 +78,7 @@ const Categories = () => {
     error,
   } = useGetCategoriesQuery();
 
-  console.log(cat)
+ 
 
   const categoryLIst = useSelector(selectAllCategories);
 
@@ -147,7 +147,7 @@ const Categories = () => {
   const updateCheckedAndExpanded=()=>{
     const linearList = createCategoryList(categoryLIst);
 
-    console.log(linearList)
+
 
     const checkedArray = [];
     const expandedArray = [];

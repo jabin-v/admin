@@ -2,6 +2,7 @@
   
     flex: 1;
     border-right: 0.5px solid rgb(230, 227, 227);
+    border-left: 0.5px solid rgb(230, 227, 227);
     min-height: 100vh;
 
     .top{
@@ -49,6 +50,12 @@
 
             &:hover{
                 background-color: #ece8ff;
+            }
+
+            .indicator{
+                background-color: red;
+                padding: 5px;
+                border-radius: 50%;
             }
         }
         .icon{

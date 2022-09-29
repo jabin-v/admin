@@ -13,7 +13,7 @@ import axios from "../../apis/orderStatics";
 import { useDispatch, useSelector } from "react-redux";
 import { publicRequest } from "../../helpers/userRequest";
 import { compareIncome, setIncome } from "../../features/stats/statsApiSlice";
-const BASE_URL = "http://localhost:3500/api";
+const BASE_URL = process.env.REACT_APP_BASE_URL
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -29,9 +29,6 @@ const Home = () => {
       headers: {
         Authorization: "Bearer " + token,
       },
-      // data:{
-      //   if we are sending a post request
-      // }
     },
   });
 
@@ -93,7 +90,7 @@ const percentage=(incomeComparison[1]?.total * 100) /incomeComparison[0]?.total 
           <Chart aspect={2 / 1} title="Transactions" />
         </div>
         <div className="listContainer">
-          <div className="listTitle">latest Transactions</div>
+          <div className="listTitle">Latest undelivered</div>
           <List />
         </div>
       </div>
