@@ -1,5 +1,5 @@
 <h1 align="center">Hi 👋, I'm jabin</h1>
-<h3 align="center">This is the admin dash board for my ecommerce websitr</h3>
+<h3 align="center">This is the admin dash board for my ecommerce website</h3>
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
