@@ -51,7 +51,7 @@ function App() {
 
     if(token && authAsAdmin){
 
-      const socket=socketIOClient("http://localhost:3500");
+      const socket=socketIOClient("https://dry-fortress-44491.herokuapp.com");
 
 
 

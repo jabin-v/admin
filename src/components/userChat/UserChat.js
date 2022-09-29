@@ -95,7 +95,7 @@ useEffect(()=>{
         style={{ maxHeight: "600px" }}
       >
         <Toast.Header>
-          <strong className="me-auto">Chat with John Doe</strong>
+          <strong className="me-auto">chat {socketUser}</strong>
         </Toast.Header>
         <Toast.Body>
           <div 
